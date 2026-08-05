@@ -27,21 +27,23 @@ Testing the server and client
 
 import socket
 
-
-HOST = "127.0.0.1"  # Standard loopback interface address (localhost)
-PORT = 65432  # Port to listen on (non-privileged ports are > 1023)
-
+HOST = "127.0.0.1"
+PORT = 65432
 
 with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
     s.bind((HOST, PORT))
     s.listen()
+    print("Server is waiting for connection...")
+
     conn, addr = s.accept()
+
     with conn:
         print(f"Connected by {addr}")
         while True:
             data = conn.recv(1024)
             if not data:
                 break
+            print("Received from client:", data.decode())
             conn.sendall(data)
 
 ```
@@ -52,23 +54,23 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
 
 import socket
 
+HOST = "127.0.0.1"
+PORT = 65432
 
-HOST = "127.0.0.1"  # The server's hostname or IP address
-PORT = 65432  # The port used by the server
-
+message = "212224040066 DHANUSH C"
 
 with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
     s.connect((HOST, PORT))
-    s.sendall(b"Hello, world")
+    s.sendall(message.encode())
     data = s.recv(1024)
 
-
-print(f"Received {data!r}")
+print("Received from server:", data.decode())
 
 ```
 ## OUTPUT:
-<img width="800" height="600" alt="img1a" src="https://github.com/user-attachments/assets/4334d3bf-cde6-4c1e-9795-596045a3682b" />
-<img width="800" height="600" alt="img1b" src="https://github.com/user-attachments/assets/0ebaf9fa-ded8-447a-bc0c-579861607d67" />
+
+<img width="1919" height="1199" alt="ex01a" src="https://github.com/user-attachments/assets/9b9dba05-4514-4471-b6ef-c732fc4286b2" />
+<img width="1919" height="1199" alt="ex01b" src="https://github.com/user-attachments/assets/28c9c624-7e04-4791-a4f3-2d6082018111" />
 
 ## RESULT:
 The program is executed successfully
